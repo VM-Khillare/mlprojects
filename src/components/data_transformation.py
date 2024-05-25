@@ -15,7 +15,7 @@ from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl")
+    preprocessor_obj_file_path=os.path.join('artifacts','preprocessor.pkl')
 
 class DataTransformation:
     def __init__(self):
@@ -48,14 +48,15 @@ class DataTransformation:
             cat_pipeline=Pipeline(
                 steps=[
                     ('imputer',SimpleImputer(strategy="most_frequent")),
-                    ('onehot_encoder',OneHotEncoder()),
+                    #('onehot_encoder',OneHotEncoder(handle_unknown='ignore')),
+                    ('one_hot_encoder',OneHotEncoder()),
                     ('scaler',StandardScaler(with_mean=False))
                 ]
             )
             
             logging.info("Numerical Columns standard scaling completed")
             
-            logging.info("Categorical columns enoding completed")
+            logging.info("Categorical columns encoding completed")
         
             preprocessor=ColumnTransformer(
                 [
